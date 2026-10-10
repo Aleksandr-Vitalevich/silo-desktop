@@ -1,0 +1,6 @@
+.venv
+.DS_Store
+silo.db
+system_logs.log
+**/____pycache__/
+*.pyc
