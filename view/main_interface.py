@@ -30,6 +30,11 @@ def main_interface_operation(page : ft.Page) :
         diary_data_operation(page)
         page.update()
 
+    def go_to_add_files_operation(e) :
+        from view.files.files_interface import add_files_operation
+        add_files_operation(page)
+        page.update()
+
     user_data = ft.FilledButton(content=ft.Text("Мои пароли и сервисы"))
     user_diary = ft.FilledButton(content=ft.Text("Мой дневник"))
     user_files = ft.FilledButton(content=ft.Text("Мои файлы"))
@@ -37,7 +42,7 @@ def main_interface_operation(page : ft.Page) :
 
     user_data.on_click = got_to_add_data_operation
     user_diary.on_click = go_to_diary_data_operation
-    #user_files.on_click = 
+    user_files.on_click = go_to_add_files_operation
     user_log_out.on_click = go_to_log_out
 
 
