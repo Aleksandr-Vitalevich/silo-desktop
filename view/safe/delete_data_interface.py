@@ -37,6 +37,11 @@ def delete_data_function(page : ft.Page) :
             id_service.value = ''
             confirm_delete.disabled = True
             page.update()
+        elif delete == "not find" :
+            page.add(ft.Text("Данные не найдены",color=ft.Colors.RED_ACCENT))
+            id_service.value = ''
+            confirm_delete.disabled = True
+            page.update()
     
     id_service.on_change = valiable_name
     btn_back.on_click = go_back

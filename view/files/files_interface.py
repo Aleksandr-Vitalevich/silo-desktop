@@ -32,15 +32,15 @@ def add_files_operation(page : ft.Page) :
     #    show_data_function(page)
     #    page.update()
 
-    #def go_to_delete_data_function(e) :
-    #    from view.safe.delete_data_interface import delete_data_function
-    #    delete_data_function(page)
-    #    page.update()
+    def go_to_delete_files_function(e) :
+        from view.files.delete_files_interface import delete_files_function
+        delete_files_function(page)
+        page.update()
     
     
     add_file.on_click = go_to_add_file_function
     #show_data_btn.on_click = go_to_show_data_function
-    #delete_data_btn.on_click = go_to_delete_data_function
+    delete_file_btn.on_click = go_to_delete_files_function
     btn_back.on_click = go_back
 
     

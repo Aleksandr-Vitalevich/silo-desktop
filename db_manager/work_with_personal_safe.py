@@ -28,10 +28,16 @@ def delete_data(id,db_path=DB_PATH) :
     try :
         with sqlite3.connect(db_path) as connection :
             cursor = connection.cursor()
-            delete_query = "DELETE FROM personal_safe WHERE id = ?"
+            query_check = 'SELECT * FROM personal_safe WHERE id = ?'
             delete_value = (id,)
-            cursor.execute(delete_query,delete_value)
-        return "success"
+            cursor.execute(query_check,delete_value)
+            res = cursor.fetchone()
+            if res :
+                delete_query = "DELETE FROM personal_safe WHERE id = ?"
+                cursor.execute(delete_query,delete_value)
+                return "success"
+            else :
+                 return "not find"
     except sqlite3.Error as e :
          raise e
 

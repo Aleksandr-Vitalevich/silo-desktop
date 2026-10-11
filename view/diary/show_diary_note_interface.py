@@ -66,6 +66,6 @@ def show_diary_note_function(page : ft.Page) :
         ft.Column([
             content_view,
             btn_back
-        ])
+        ],expand=True)
     )
     page.update()

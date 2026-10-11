@@ -39,8 +39,8 @@ def add_data_function(page : ft.Page) :
     def add_data_to_safe(e) :
         master_password = AppState.master_password
         dct_add = {
-                "name_service" : encrypt_text(name_service.value,master_password),
-                "login_service" : encrypt_text(login_service.value,master_password),
+                "name_service" : name_service.value,
+                "login_service" : login_service.value,
                 "password_service" : encrypt_text(password_service.value,master_password),
                 "site_service" : encrypt_text(site_service.value,master_password),
                 "token_service" : encrypt_text(token_service.value,master_password),

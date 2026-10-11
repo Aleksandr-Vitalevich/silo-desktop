@@ -23,8 +23,8 @@ def show_data_function(page : ft.Page) :
     table_rows = []
     for row in data :
         id_service = row[0]
-        name_service_decript = decrypt_text(row[1],master_password)
-        login_service_decript = decrypt_text(row[2],master_password)
+        name_service_decript = row[1]
+        login_service_decript = row[2]
         password_service_decript = decrypt_text(row[3],master_password)
         site_service_decript = decrypt_text(row[4],master_password)
         token_service_decript = decrypt_text(row[5],master_password)
@@ -33,19 +33,24 @@ def show_data_function(page : ft.Page) :
         table_rows.append(
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.Text(id_service)),
-                    ft.DataCell(ft.Text(name_service_decript)),
-                    ft.DataCell(ft.Text(login_service_decript)),
-                    ft.DataCell(ft.Text(password_service_decript)),
+                    ft.DataCell(ft.Text(id_service,selectable=True)),
+                    ft.DataCell(ft.Text(name_service_decript,selectable=True)),
+                    ft.DataCell(ft.Text(login_service_decript,selectable=True)),
+                    ft.DataCell(ft.Text(password_service_decript,selectable=True)),
                     ft.DataCell(ft.TextButton(
                         content=ft.Text(site_service_decript,
                         max_lines=3,
-                        overflow=ft.TextOverflow.ELLIPSIS))),
-                    ft.DataCell(ft.Text(token_service_decript)),
+                        overflow=ft.TextOverflow.ELLIPSIS
+                        ),url=site_service_decript if site_service_decript.startswith("http") else f"https://{site_service_decript}",
+                        width=250 
+                        )),
+                    ft.DataCell(ft.Text(token_service_decript,
+                        max_lines=3,
+                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True )),
                     ft.DataCell(ft.Text(
                         other_need_information_service_decript,
                         max_lines=3,
-                        overflow=ft.TextOverflow.ELLIPSIS)),
+                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True)),
                 ]
             )
         )
@@ -63,7 +68,13 @@ def show_data_function(page : ft.Page) :
         rows = table_rows
     )
 
-    table_container.content = ft.ListView(controls=[passwords_table], expand=True, spacing=10)
+    horizontal_scroll = ft.Row(
+            controls=[passwords_table],
+            scroll=ft.ScrollMode.ALWAYS,
+            expand=True
+        )
+
+    table_container.content = ft.ListView(controls=[horizontal_scroll], expand=True, spacing=10)
     page.update()
 
 
@@ -79,6 +90,6 @@ def show_data_function(page : ft.Page) :
         ft.Column([
             table_container,
             btn_back
-        ])
+        ],expand=True)
     )
     page.update()

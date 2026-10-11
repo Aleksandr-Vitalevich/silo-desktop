@@ -30,10 +30,16 @@ def delete_file(id : int,db_path = DB_PATH) :
         with sqlite3.Connection(db_path) as connection :
             cursor = connection.cursor()
             query_value = (id,)
-            query_delete = 'DELETE FROM user_files WHERE id = ?'
-            cursor.execute(query_delete,query_value)
-            connection.commit()
-        return "success"
+            query_check = 'SELECT * FROM user_files WHERE id = ?'
+            cursor.execute(query_check,query_value)
+            res = cursor.fetchone()
+            if res :
+                query_delete = 'DELETE FROM user_files WHERE id = ?'
+                cursor.execute(query_delete,query_value)
+                connection.commit()
+                return "success"
+            else :
+                return "not find"
     except sqlite3.Error as e :
         raise e
 
