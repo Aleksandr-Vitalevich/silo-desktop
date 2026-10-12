@@ -31,13 +31,14 @@ def show_diary_note_function(page : ft.Page) :
             table_rows.append(
                 ft.DataRow(
                     cells=[
-                        ft.DataCell(ft.Text(data_create)),
+                        ft.DataCell(ft.Text(data_create,color=ft.Colors.BROWN_200)),
                         ft.DataCell(
                             ft.Text(
                                 value=decrypted_note,
                                 selectable=True,
                                 max_lines=4,
-                                overflow=ft.TextOverflow.ELLIPSIS
+                                overflow=ft.TextOverflow.ELLIPSIS,
+                                color=ft.Colors.BROWN_200
                             )
                         ),
                     ]

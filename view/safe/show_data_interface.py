@@ -33,24 +33,24 @@ def show_data_function(page : ft.Page) :
         table_rows.append(
             ft.DataRow(
                 cells=[
-                    ft.DataCell(ft.Text(id_service,selectable=True)),
-                    ft.DataCell(ft.Text(name_service_decript,selectable=True)),
-                    ft.DataCell(ft.Text(login_service_decript,selectable=True)),
-                    ft.DataCell(ft.Text(password_service_decript,selectable=True)),
+                    ft.DataCell(ft.Text(id_service,selectable=True,color=ft.Colors.BROWN_200)),
+                    ft.DataCell(ft.Text(name_service_decript,selectable=True,color=ft.Colors.BROWN_200)),
+                    ft.DataCell(ft.Text(login_service_decript,selectable=True,color=ft.Colors.BROWN_200)),
+                    ft.DataCell(ft.Text(password_service_decript,selectable=True,color=ft.Colors.BROWN_200)),
                     ft.DataCell(ft.TextButton(
                         content=ft.Text(site_service_decript,
                         max_lines=3,
-                        overflow=ft.TextOverflow.ELLIPSIS
+                        overflow=ft.TextOverflow.ELLIPSIS,color=ft.Colors.BROWN_200
                         ),url=site_service_decript if site_service_decript.startswith("http") else f"https://{site_service_decript}",
                         width=250 
                         )),
                     ft.DataCell(ft.Text(token_service_decript,
                         max_lines=3,
-                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True )),
+                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True,color=ft.Colors.BROWN_200 )),
                     ft.DataCell(ft.Text(
                         other_need_information_service_decript,
                         max_lines=3,
-                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True)),
+                        overflow=ft.TextOverflow.ELLIPSIS,expand=True,width=250,selectable=True,color=ft.Colors.BROWN_200)),
                 ]
             )
         )

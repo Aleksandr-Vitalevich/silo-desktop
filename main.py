@@ -15,6 +15,12 @@ def main_operation(page : ft.Page) :
 
     page.update()
 
+    page.theme = ft.Theme(
+            color_scheme=ft.ColorScheme(
+                primary=ft.Colors.BROWN_300
+            ),
+        )
+
 if __name__ == "__main__":
     ft.run(main_operation)
 
