@@ -2,26 +2,48 @@ import os
 import sys
 import subprocess
 
-# 1. Определяем корень проекта с учетом специфики бандла macOS (.app)
-exe_dir = os.path.dirname(sys.executable)
+def get_base_dir():
+    """Безопасное определение корня флешки с обходом песочницы macOS"""
+    # Если запущен скомпилированный бинарник
+    if getattr(sys, 'frozen', False):
+        exe_dir = os.path.dirname(sys.executable)
+        # Если мы внутри маковского бандла .app
+        if "Contents/MacOS" in exe_dir:
+            return os.path.abspath(os.path.join(exe_dir, "../../../.."))
+        return exe_dir
+    # Если запускаем просто как скрипт при отладке
+    return os.path.dirname(os.path.abspath(__file__))
 
-if "Contents/MacOS" in exe_dir:
-    # Если мы внутри скомпилированного .app на Маке, выходим на 4 уровня вверх к флешке
-    BASE_DIR = os.path.abspath(os.path.join(exe_dir, "../../../.."))
-else:
-    # На Windows и Linux корень — это папка, где лежит сам exe/бинарник
-    BASE_DIR = exe_dir
+BASE_DIR = get_base_dir()
 
-# 2. Определяем, на какой ОС мы запущены, и выбираем нужный скрипт
+# Универсальные пути к интерпретатору Python внутри виртуального окружения на флешке
 if sys.platform == "win32":
-    script_path = os.path.join(BASE_DIR, "build_pure_pyinstaller_win.bat")
-    # Молча будим батник Windows без открытия лишних консолей
-    subprocess.Popen([script_path], cwd=BASE_DIR, creationflags=subprocess.CREATE_NO_WINDOW)
+    python_executable = os.path.join(BASE_DIR, ".venv_windows", "Scripts", "python.exe")
+    script_to_run = os.path.join(BASE_DIR, "src", "main.py")
+    
+    if os.path.exists(python_executable):
+        subprocess.Popen([python_executable, script_to_run], cwd=BASE_DIR, creationflags=subprocess.CREATE_NO_WINDOW)
+
 elif sys.platform == "darwin":
-    script_path = os.path.join(BASE_DIR, "build_pure_pyinstaller_mac.command")
-    # Молча запускаем bash-скрипт Мака
-    subprocess.Popen(["bash", script_path], cwd=BASE_DIR)
+    # Путь к Python внутри маковского окружения на флешке
+    python_executable = os.path.join(BASE_DIR, ".venv_mac", "bin", "python3")
+    script_to_run = os.path.join(BASE_DIR, "src", "main.py")
+    
+    # 🍏 ВАЖНО ДЛЯ macOS: Если окружения еще нет, или запускаем напрямую
+    if not os.path.exists(python_executable):
+        # Если первого запуска не было и venv на флешке пустой, 
+        # используем системный python3 мака, чтобы запустить стартовый скрипт настройки
+        setup_script = os.path.join(BASE_DIR, "build_pure_pyinstaller_mac.command")
+        subprocess.Popen(["/bin/bash", setup_script], cwd=BASE_DIR)
+    else:
+        # Если окружение .venv_mac уже готово, запускаем приложение напрямую БЕЗ ТЕРМИНАЛА!
+        # Передаем переменные окружения, чтобы Flet знал, что он на десктопе Mac
+        env = os.environ.copy()
+        env["FLET_PLATFORM"] = "macos"
+        subprocess.Popen([python_executable, script_to_run], cwd=BASE_DIR, env=env)
 else:
-    script_path = os.path.join(BASE_DIR, "build_pure_pyinstaller_linux.sh")
-    # Молча запускаем bash-скрипт Linux
-    subprocess.Popen(["bash", script_path], cwd=BASE_DIR)
+    # Linux (для Юнуса)
+    python_executable = os.path.join(BASE_DIR, ".venv_linux", "bin", "python3")
+    script_to_run = os.path.join(BASE_DIR, "src", "main.py")
+    if os.path.exists(python_executable):
+        subprocess.Popen([python_executable, script_to_run], cwd=BASE_DIR)
