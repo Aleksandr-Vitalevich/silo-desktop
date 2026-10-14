@@ -1,3 +1,0 @@
-from view.files.add_files_interface import add_file_function
-from view.files.delete_files_interface import delete_files_function
-from view.files.files_interface import add_files_operation

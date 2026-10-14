@@ -1,15 +1,10 @@
 import flet as ft
 from state import AppState
+from utils.page_config import configure_base_page
 
 def show_data_function(page : ft.Page) :
     '''Функция управляет интерфейсом отображения данных в мои пароли и сервисы'''
-    page.title = "Silo-Core Меню отображения данных"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню отображения данных")
 
     master_password = AppState.master_password
     table_container = ft.Container()

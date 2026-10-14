@@ -2,15 +2,11 @@ import flet as ft
 from db_manager.work_with_add_user import check_user_authorization
 from view.main_interface import main_interface_operation
 from state import AppState
+from utils.page_config import configure_base_page
 
 def authorization_function(page : ft.Page) :
     '''Функция регистрации в приложении'''
-    page.title = "Silo-Core Меню авторизации"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню авторизации")
 
     user_login = ft.TextField(label = "Введите логин")
     user_password = ft.TextField(label = "Введите пароль",password=True,can_reveal_password=True)

@@ -1,16 +1,12 @@
 import flet as ft
 from utils.security import encrypt_text
 from state import AppState
+from utils.page_config import configure_base_page
 
 def add_diary_note_function(page : ft.Page) :
     '''Функция управляет интерфейсом добавления записи в дневник'''
-    page.title = "Silo-Core Меню добавления записи в дневник"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    
+    configure_base_page(page,"Silo-Core Меню добавления записи в дневник")
 
     diary_note = ft.TextField(label="Ваша запись в дневник",multiline=True,min_lines=3,max_lines=8)
     

@@ -1,15 +1,10 @@
 import flet as ft
+from utils.page_config import configure_base_page
 
 
 def diary_data_operation(page : ft.Page) :
     '''Основная функция модуля дневник'''
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.title = "Silo-Core Меню управления Дневником"
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню управления Дневником")
 
     add_data = ft.FilledButton(content=ft.Text("Добавить запись"))
     show_data_btn = ft.FilledButton(content=ft.Text("Показать записи"))

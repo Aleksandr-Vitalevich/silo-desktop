@@ -2,16 +2,11 @@ import flet as ft
 from db_manager.work_with_personal_safe import add_data
 from utils.security import encrypt_text
 from state import AppState
+from utils.page_config import configure_base_page
 
 def add_data_function(page : ft.Page) :
     '''Функция управляет интерфейсом добавления данных в мои пароли и сервисы'''
-    page.title = "Silo-Core Меню добавления записей в сервис"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню добавления записей в сервис")
 
     name_service = ft.TextField(label = "Введите название сервиса")
     login_service = ft.TextField(label = "Введите логин")

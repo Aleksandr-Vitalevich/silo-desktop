@@ -1,17 +1,11 @@
 import flet as ft
 from state import AppState
+from utils.page_config import configure_base_page
 
 
 def main_interface_operation(page : ft.Page) :
     '''Основная функция переключатель'''
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.title = "Silo-Core Главное меню"
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
-    master_password = AppState.master_password
+    configure_base_page(page,"Silo-Core Главное меню")
 
     def go_to_log_out(e) :
         from state import AppState
@@ -30,19 +24,12 @@ def main_interface_operation(page : ft.Page) :
         diary_data_operation(page)
         page.update()
 
-    def go_to_add_files_operation(e) :
-        from view.files.files_interface import add_files_operation
-        add_files_operation(page)
-        page.update()
-
     user_data = ft.FilledButton(content=ft.Text("Мои пароли и сервисы"))
     user_diary = ft.FilledButton(content=ft.Text("Мой дневник"))
-    user_files = ft.FilledButton(content=ft.Text("Мои файлы"))
     user_log_out = ft.FilledButton(content=ft.Text("Выход"))
 
     user_data.on_click = got_to_add_data_operation
     user_diary.on_click = go_to_diary_data_operation
-    user_files.on_click = go_to_add_files_operation
     user_log_out.on_click = go_to_log_out
 
 
@@ -51,7 +38,6 @@ def main_interface_operation(page : ft.Page) :
             ft.Column([
                 user_data,
                 user_diary,
-                user_files,
                 user_log_out
             ])
         )

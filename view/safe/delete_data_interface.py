@@ -1,14 +1,9 @@
 import flet as ft
+from utils.page_config import configure_base_page
 
 def delete_data_function(page : ft.Page) :
     '''Функция управляет интерфейсом удаления данных в мои пароли и сервисы'''
-    page.title = "Silo-Core Меню удаления записей в сервисе"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню удаления записей в сервисе")
 
     id_service = ft.TextField(label = "Введите id сервиса")
     

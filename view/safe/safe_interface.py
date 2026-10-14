@@ -1,15 +1,9 @@
 import flet as ft
-
+from utils.page_config import configure_base_page
 
 def add_data_operation(page : ft.Page) :
     '''Основная функция модуля данных'''
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    page.clean()
-    page.title = "Silo-Core Меню управления Мои пароли и сервисы"
-    page.window_width = 1920
-    page.window_height = 1080
-    page.theme_mode = ft.ThemeMode.DARK
+    configure_base_page(page,"Silo-Core Меню управления Мои пароли и сервисы")
 
     add_data = ft.FilledButton(content=ft.Text("Добавить сервис"))
     show_data_btn = ft.FilledButton(content=ft.Text("Показать данные"))
