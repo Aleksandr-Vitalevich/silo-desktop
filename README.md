@@ -19,3 +19,17 @@
 - Данные (Сохранение , просмотр, удаление ваших паролей , логинов и остального что хотите сохранить)
 - Дневник (Можете писать свои мысли , идеи). 
 - Выход меню выхода
+
+## __Запуск на mac os и linux__
+---
+> Первый старт<br>
+`python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements_mac.txt
+python3 main.py`
+
+> Последующие запуски<br>
+`source .venv/bin/activate
+python3 main.py`
+
+
