@@ -3,46 +3,46 @@ cd "$(dirname "$0")" || exit
 
 clear
 echo "======================================================"
-echo "🍏 Silo-Core v3.0-RC1: Авто-сборка и запуск для macOS..."
+echo "🍏 Silo-Core v3.0-RC1: Прямая сборка через PyInstaller..."
 echo "======================================================"
 
-# 1. Проверяем Python3
+# 1. Проверяем Python
 if ! command -v python3 &> /dev/null; then
-    echo "[ОШИБКА] На этом Mac не обнаружен установленный Python 3!"
+    echo "[ОШИБКА] На этом Mac не обнаружен Python 3!"
     read -p "Нажмите [Enter] для выхода..."
     exit 1
 fi
 
-# 2. Поднимаем venv для сборки
+# 2. Поднимаем venv
 if [ ! -d ".venv_build_mac" ]; then
-    echo "[1/4] Создаю изолированное окружение для сборки на Mac..."
+    echo "[1/4] Создаю окружение .venv_build_mac..."
     python3 -m venv .venv_build_mac
     source .venv_build_mac/bin/activate
     python3 -m pip install --upgrade pip > /dev/null
     echo "[2/4] Устанавливаю зависимости проекта и PyInstaller..."
     pip install -r requirements_mac.txt
-    pip install pyinstaller flet-cli==1.0.3
+    pip install pyinstaller  # Ставим чистый PyInstaller напрямую!
 else
     source .venv_build_mac/bin/activate
 fi
 
-# 3. Компиляция проекта
-echo "[3/4] 📦 Компиляция проекта в автономный пакет macOS..."
-export FLET_PLATFORM="macos"
-flet pack src/main.py --name "SiloCoreSafe" --onefile
+# 3. Компиляция напрямую через PyInstaller
+echo "[3/4] 📦 Упаковка Flet-приложения через PyInstaller..."
+# --windowed прячет консоль и делает нативный .app для Mac
+pyinstaller --clean --onefile --windowed --name "SiloCoreSafe" src/main.py
 
 if [ ! -d "dist/SiloCoreSafe.app" ] && [ ! -f "dist/SiloCoreSafe" ]; then
-    echo "[КРИТИЧЕСКАЯ ОШИБКА] Сборка на Mac завершилась сбоем!"
+    echo "[КРИТИЧЕСКАЯ ОШИБКА] Сборка завершилась неудачей!"
     read -p "Нажмите [Enter] для выхода..."
     exit 1
 fi
 
-echo "[4/4] 🎉 Сборка успешно завершена! Пакет находится в папке dist/"
+echo "[4/4] 🎉 Успешно! Скомпилированный файл лежит в папке dist/"
 echo "🚀 Запускаю скомпилированный крипто-сейф..."
 
-# 4. Отключаем окружение сборщика и запускаем готовое скомпилированное приложение
 deactivate
 
+# 4. Запуск готового бинарника
 if [ -d "dist/SiloCoreSafe.app" ]; then
     open "dist/SiloCoreSafe.app"
 else
